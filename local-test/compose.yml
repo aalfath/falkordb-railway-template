@@ -1,0 +1,11 @@
+# Local test of the Railway image: FALKORDB_PASSWORD=$(openssl rand -hex 16) docker compose -f local-test/compose.yml up --build
+services:
+  falkordb:
+    build: ..
+    ports: ["3000:3000", "6379:6379"]
+    environment:
+      FALKORDB_PASSWORD: ${FALKORDB_PASSWORD:?set FALKORDB_PASSWORD}
+      NEXTAUTH_URL: http://localhost:3000
+    volumes: [data:/var/lib/falkordb/data]
+volumes:
+  data:
